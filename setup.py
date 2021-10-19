@@ -10,10 +10,10 @@ classifiers = [
 
 setup(
     name='zeroone-ai',
-    version='0.0.2',
+    version='0.0.3',
     description='With this package you can make an simple AI that can predict a zero or a one.',
     long_description=open('README.txt').read() + '\n\n' + open('CHANGELOG.txt').read(),
-    url='https://github.com/MathijsTak/Pacemaker-ai',
+    url='https://github.com/MathijsTak/ZeroOneAi',
     author='MathijsTak',
     author_email='mathijs.tak@outlook.com',
     license='MIT',
