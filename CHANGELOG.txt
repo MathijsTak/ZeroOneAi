@@ -1,7 +1,7 @@
 Change Log
 ===========
 
-0.0.5 - 0.0.7 (20-10-2021)
+0.0.7 (20-10-2021)
 -------------------
 - Fixed a bug where the library couldn't be imported
 
