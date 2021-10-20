@@ -1,1 +1,1 @@
-from zeroone_ai import MLPRegressor
+from zerooneai import MLPRegressor
