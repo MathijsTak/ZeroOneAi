@@ -34,6 +34,13 @@ def plt(true_labels,pred_labels,label,length,yrange,ax):
     ax.set_xlabel('')
     ax.set_ylabel('')
     ax.set_title(label)
+    if yrange != None:
+        ax.set_ylim(yrange)
+    ax.legend()
+
+    if ax == None:
+        matplot.show()
+
     matplot.show()
 
 class MLPRegressor:
@@ -41,7 +48,7 @@ class MLPRegressor:
         self.label = label
         dataset = pd.read_csv(dataset)
         input_data = dataset[input_data]
-        input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min()) # stap 3
+        input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min())
         label = dataset[self.label]
 
         self.data_train, self.data_test, self.labels_train, self.labels_test = train_test_split(input_data,label,test_size=test_size,random_state=random_state)
@@ -97,7 +104,7 @@ class MLPClassifier:
         self.label = label
         dataset = pd.read_csv(dataset)
         input_data = dataset[input_data]
-        input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min()) # stap 3
+        input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min())
         label = dataset[self.label]
 
         self.data_train, self.data_test, self.labels_train, self.labels_test = train_test_split(input_data,label,test_size=test_size,random_state=random_state)
