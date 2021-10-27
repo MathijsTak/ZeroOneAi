@@ -1,6 +1,11 @@
 Change Log
 ===========
 
+0.0.10 (27-10-2021)
+-------------------
+- The LogisticRegressor bug has been fixed 
+- Plots will now always show
+
 0.0.9 (27-10-2021)
 -------------------
 - The AI now predicts a zero or an one

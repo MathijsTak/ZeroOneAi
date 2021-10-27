@@ -34,12 +34,7 @@ def plt(true_labels,pred_labels,label,length,yrange,ax):
     ax.set_xlabel('')
     ax.set_ylabel('')
     ax.set_title(label)
-    if yrange != None:
-        ax.set_ylim(yrange)
-    ax.legend()
-
-    if ax == None:
-        matplot.show()
+    matplot.show()
 
 class MLPRegressor:
     def __init__(self,dataset,input_data,label,test_size=0.2,random_state=42):
@@ -95,6 +90,7 @@ class MLPRegressor:
         matplot.ylim(0.1)
         matplot.legend()
         matplot.plot()
+        matplot.show()
 
 class MLPClassifier:
     def __init__(self,dataset,input_data,label,test_size=0.2,random_state=42):
@@ -150,6 +146,7 @@ class MLPClassifier:
         matplot.ylim(0.1)
         matplot.legend()
         matplot.plot()
+        matplot.show()
 
 class LogisticRegressor:
     def __init__(self,dataset,input_data,label,test_size=0.2,random_state=42):
@@ -168,8 +165,8 @@ class LogisticRegressor:
 
         plt(true_labels,pred_labels,self.label,length,yrange,ax)
 
-    def train(self,hidden_layer_sizes):
-        self.model = LR(hidden_layer_sizes)
+    def train(self):
+        self.model = LR()
         self.model.fit(self.data_train,self.labels_train)
         
         pred_labels = self.model.predict(self.data_test)
