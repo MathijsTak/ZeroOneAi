@@ -20,6 +20,15 @@ def accuracy(pred_labels,true_labels):
         MAE = all_errors / lengte
         return MAE
 
+def normalize(df, mapping):
+    result = df.copy()
+    for feature_name in df.columns:
+        max_value = mapping[feature_name]['max']
+        min_value = mapping[feature_name]['min']
+        result[feature_name] = (df[feature_name] - min_value) / (max_value - min_value)
+    return result
+
+
 def plt(true_labels,pred_labels,label,length,yrange,ax):
     if ax == None:
         fig, ax = matplot.subplots()
@@ -44,11 +53,18 @@ def plt(true_labels,pred_labels,label,length,yrange,ax):
     matplot.show()
 
 class MLPRegressor:
-    def __init__(self,dataset,input_data,label,test_size=0.2,random_state=42):
+    def __init__(self,dataset,input_data,label,test_size=0.2,random_state=42,mapping=None):
         self.label = label
+        self.mapping = mapping
         dataset = pd.read_csv(dataset)
         input_data = dataset[input_data]
-        input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min())
+        if mapping == None:
+            input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min())
+            self.mean = input_data.mean()
+            self.max = input_data.max()
+            self.min = input_data.min()
+        else:
+            input_data = normalize(input_data, mapping)
         label = dataset[self.label]
 
         self.data_train, self.data_test, self.labels_train, self.labels_test = train_test_split(input_data,label,test_size=test_size,random_state=random_state)
@@ -59,6 +75,14 @@ class MLPRegressor:
         pred_labels = np.round(np.clip(pred_labels,0,1))
 
         plt(true_labels,pred_labels,self.label,length,yrange,ax)
+
+    def prediction(self, prediction_data):
+        if self.mapping == None:
+            prediction_data = (prediction_data - self.mean) / (self.max - self.min)
+        else:
+            prediction_data = normalize(prediction_data, self.mapping)
+        pred_label = self.model.predict(prediction_data)
+        return pred_label
 
     def train(self,hidden_layer_sizes):
         self.model = MLPR(hidden_layer_sizes)
@@ -100,11 +124,18 @@ class MLPRegressor:
         matplot.show()
 
 class MLPClassifier:
-    def __init__(self,dataset,input_data,label,test_size=0.2,random_state=42):
+    def __init__(self,dataset,input_data,label,test_size=0.2,random_state=42,mapping=None):
         self.label = label
+        self.mapping = mapping
         dataset = pd.read_csv(dataset)
         input_data = dataset[input_data]
-        input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min())
+        if mapping == None:
+            input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min())
+            self.mean = input_data.mean()
+            self.max = input_data.max()
+            self.min = input_data.min()
+        else:
+            input_data = normalize(input_data, mapping)
         label = dataset[self.label]
 
         self.data_train, self.data_test, self.labels_train, self.labels_test = train_test_split(input_data,label,test_size=test_size,random_state=random_state)
@@ -115,6 +146,14 @@ class MLPClassifier:
         pred_labels = np.round(np.clip(pred_labels,0,1))
 
         plt(true_labels,pred_labels,self.label,length,yrange,ax)
+    
+    def prediction(self, prediction_data):
+        if self.mapping == None:
+            prediction_data = (prediction_data - self.mean) / (self.max - self.min)
+        else:
+            prediction_data = normalize(prediction_data, self.mapping)
+        pred_label = self.model.predict(prediction_data)
+        return pred_label
 
     def train(self,hidden_layer_sizes):
         self.model = MLPC(hidden_layer_sizes)
@@ -156,11 +195,18 @@ class MLPClassifier:
         matplot.show()
 
 class LogisticRegressor:
-    def __init__(self,dataset,input_data,label,test_size=0.2,random_state=42):
+    def __init__(self,dataset,input_data,label,test_size=0.2,random_state=42,mapping=None):
         self.label = label
+        self.mapping = mapping
         dataset = pd.read_csv(dataset)
         input_data = dataset[input_data]
-        input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min()) # stap 3
+        if mapping == None:
+            input_data = (input_data - input_data.mean()) / (input_data.max() - input_data.min())
+            self.mean = input_data.mean()
+            self.max = input_data.max()
+            self.min = input_data.min()
+        else:
+            input_data = normalize(input_data, mapping)
         label = dataset[self.label]
 
         self.data_train, self.data_test, self.labels_train, self.labels_test = train_test_split(input_data,label,test_size=test_size,random_state=random_state)
@@ -171,6 +217,14 @@ class LogisticRegressor:
         pred_labels = np.round(np.clip(pred_labels,0,1))
 
         plt(true_labels,pred_labels,self.label,length,yrange,ax)
+
+    def prediction(self, prediction_data):
+        if self.mapping == None:
+            prediction_data = (prediction_data - self.mean) / (self.max - self.min)
+        else:
+            prediction_data = normalize(prediction_data, self.mapping)
+        pred_label = self.model.predict(prediction_data)
+        return pred_label
 
     def train(self):
         self.model = LR()
