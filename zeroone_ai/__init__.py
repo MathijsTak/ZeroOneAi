@@ -161,7 +161,7 @@ class MLPClassifier:
         
         pred_labels = self.model.predict(self.data_test)
         true_labels = self.labels_test
-        pred_labels = np.round(np.clip(pred_labels,0,1))
+        #pred_labels = np.round(np.clip(pred_labels,0,1))
 
         self.accuracy = accuracy(pred_labels,true_labels)
         print('Het model heeft een nauwkeurigheid van {}.'.format(self.accuracy))
